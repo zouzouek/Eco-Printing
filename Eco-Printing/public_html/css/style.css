@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 9, 2016, 5:22:39 PM
+    Author     : joseph
+*/
+
+body{
+    background-color: #f9f7e8;
+}
+.container{
+    height:100%;
+    width:100%;
+    margin:auto;
+}
+.logoMiddle{
+    background-image: url("img/eco-printing-logo.jpg");
+    width:500px;
+    height:500px;
+    margin:auto;
+
+}
+.Button{
+    display:block;
+    font-size: 50pt;
+    height:100px;
+    width:100px;
+    background-color: #f9f7e8;
+    color: #8dcb1e;
+    border-radius: 50%;
+    border:3px #8dcb1e solid;
+    margin:auto;
+    margin-top:10%;
+    outline:nonw;
+    cursor:pointer;
+}
+button:focus {outline:0 !important; }
+
+.Button:hover{
+     background-color:  #8dcb1e;
+    color: #f9f7e8;
+}
