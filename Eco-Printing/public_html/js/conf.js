@@ -4,5 +4,5 @@
  * and open the template in the editor.
  */
 
-var data = sessionStorage.getItem('userID');
-var ref = new Firebase("https://popping-fire-7207.firebaseio.com/users/" + data+"/Files");
+var username = sessionStorage.getItem('userID');
+var ref = new Firebase("https://popping-fire-7207.firebaseio.com/users/" + username+"/Files");

@@ -6,14 +6,14 @@
 
 
 function getMostUsedExtensionFiles(jsonObject) {
-    console.log(jsonObject);
     var tempJson = [];
-    for (i = 0; i < jsonObject.length; i++) {
+    console.log(jsonObject);
+    for (i = 0; i < jsonObject.Files.length; i++) {
         var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject[i].DataPrinted.substring(6, 10)
+        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10)
         if (currentYear.toString() === yearFile)
         {
-            var file = jsonObject[i];
+            var file = jsonObject.Files[i];
             var extensionExists = 0;
             for (var j = 0; j < tempJson.length; j++)
             {
@@ -43,14 +43,14 @@ function getMonthlyCO2(jsonObject) {
     for (i = 0; i < tempJson.length; i++) {
         tempJson[i] = 0;
     }
-    for (i = 0; i < jsonObject.length; i++) {
+    for (i = 0; i < jsonObject.Files.length; i++) {
         var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject[i].DataPrinted.substring(6, 10);
+        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10);
 
         if (currentYear.toString() === yearFile)
         {
-            var monthFile = parseInt(jsonObject[i].DataPrinted.substring(4, 6));
-            tempJson[monthFile - 1] = tempJson[monthFile - 1] + jsonObject[i].TotalPagesPrinted * 6;
+            var monthFile = parseInt(jsonObject.Files[i].DataPrinted.substring(4, 6));
+            tempJson[monthFile - 1] = tempJson[monthFile - 1] + jsonObject.Files[i].TotalPagesPrinted * 6;
         }
     }
     return tempJson;
@@ -58,20 +58,20 @@ function getMonthlyCO2(jsonObject) {
 
 function getTotalPapersPrinted(jsonObject) {
     var totalPapers = 0;
-    for (i = 0; i < jsonObject.length; i++) {
+    for (i = 0; i < jsonObject.Files.length; i++) {
         var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject[i].DataPrinted.substring(6, 10);
+        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10);
 
         if (currentYear.toString() === yearFile)
         {
-            totalPapers = totalPapers + jsonObject[i].TotalPagesPrinted;
+            totalPapers = totalPapers + jsonObject.Files[i].TotalPagesPrinted;
         }
     }
     return totalPapers;
 }
 
 ref.once("value", function (snapshot) {
-    var data = snapshot.val();
+    drawStats(snapshot.val());
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
@@ -123,7 +123,7 @@ var pieData = [
     }
 
 ];
-$(function () {
+function drawStats(data) {
 
 
     var pieResult = getMostUsedExtensionFiles(data);
@@ -150,4 +150,5 @@ $(function () {
         window.myPie = new Chart(ctx2).Doughnut(pieData);
     }
 
-});
+}
+;
