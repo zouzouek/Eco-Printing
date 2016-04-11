@@ -11,19 +11,33 @@
 
     </head>
     <body>
-        <p id="name"></p>
-        <p id="totalPages"></p>
-        <p id="totalCO2"></p>
-        <p id="totalTrees"></p>
-        <p><b>Gramms of CO2 emmited per month</b>.</p>
-        <div style="width: 50%">
-            <canvas id="bargraph" height="450" width="600"></canvas>
+        <div class="container">
+            <div class="topbar">
+                <div class="logo"><img src="img/eco-printing-logo.jpg" class=""/></div>
+                <div class="name right">Welcome, Zouzou el khoury</div>
+            </div>
+            <div class="content ">
+                <p class="boxTitle">Your Stats</p>
+                <div class="statsBox">
+                    <div class="statsitem left"><div class="title">Pages printed</div><div class="title" id="totalPages"></div> </div>
+                    <div class="statsitem right"><p class="title">Grams of CO2 emitted</p><p class="title" id="totalCO2"></p></div>
+                    <div class="statsitem center"><p class="title">Amount of trees killed</p><p class="title" id="totalTrees"></p></div>
+                </div>
+            </div>
+            <div class="margin">
+                <div class="graphContainer left">
+                    <p><b>Gramms of CO2 emmited per month</b>.</p>
+                    <div class="graph " >
+                        <canvas id="bargraph" height="450" width="600"></canvas>
+                    </div>
+                </div>
+                <div class="graphContainer right">
+                    <p><b>Ammount of pages printed per file extension</b>.</p>
+                    <div class="pie " >
+                        <canvas id="piechart" height="450" width="600"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p><b>Ammount of pages printed per file extension</b>.</p>
-        <div style="width: 50%">
-            <canvas id="piechart" height="450" width="600"></canvas>
-        </div>
-
-
     </body>
 </html>
