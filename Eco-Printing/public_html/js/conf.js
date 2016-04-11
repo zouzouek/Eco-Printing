@@ -5,4 +5,4 @@
  */
 
 var data = sessionStorage.getItem('userID');
-var ref = new Firebase("https://popping-fire-7207.firebaseio.com/users/" + data);
+var ref = new Firebase("https://popping-fire-7207.firebaseio.com/users/" + data+"/Files");

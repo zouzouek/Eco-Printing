@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!doctype html>
 <html>
     <head>
-        <title>Profile Eco-Printing</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bar Chart</title>
+        <script src="js/Chart.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
         <script src="js/conf.js"></script>
-        <script src="js/profile.js"></script>
+        <script src="js/stats.js"></script>
+
     </head>
     <body>
-        <div id="sample"></div>
+        <p id="name"></p>
+        <p id="totalPages"></p>
+        <p id="totalCO2"></p>
+        <p id="totalTrees"></p>
+        <p><b>Gramms of CO2 emmited per month</b>.</p>
+        <div style="width: 50%">
+            <canvas id="bargraph" height="450" width="600"></canvas>
+        </div>
+        <p><b>Ammount of pages printed per file extension</b>.</p>
+        <div style="width: 50%">
+            <canvas id="piechart" height="450" width="600"></canvas>
+        </div>
+
+
     </body>
 </html>

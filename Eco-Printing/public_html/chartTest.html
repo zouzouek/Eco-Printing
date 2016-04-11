@@ -1,176 +1,26 @@
 <!doctype html>
 <html>
-	<head>
-		<title>Bar Chart</title>
-		<script src="js/Chart.js"></script>
-	</head>
-	<body>
-                <p id="totalPages"></p>
-                <p id="totalCO2"></p>
-                <p id="totalTrees"></p>
-                <p><b>Gramms of CO2 emmited per month</b>.</p>
-		<div style="width: 50%">
-			<canvas id="bargraph" height="450" width="600"></canvas>
-		</div>
-                <p><b>Ammount of pages printed per file extension</b>.</p>
-		<div style="width: 50%">
-			<canvas id="piechart" height="450" width="600"></canvas>
-		</div>
+    <head>
+        <title>Bar Chart</title>
+        <script src="js/Chart.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+        <script src="js/stats.js"></script>
+    </head>
+    <body>
+        <p id="totalPages"></p>
+        <p id="totalCO2"></p>
+        <p id="totalTrees"></p>
+        <p><b>Gramms of CO2 emmited per month</b>.</p>
+        <div style="width: 50%">
+            <canvas id="bargraph" height="450" width="600"></canvas>
+        </div>
+        <p><b>Ammount of pages printed per file extension</b>.</p>
+        <div style="width: 50%">
+            <canvas id="piechart" height="450" width="600"></canvas>
+        </div>
 
-	<script>
-	function getMostUsedExtensionFiles(jsonObject) {
-            var tempJson = [];
-            for(i = 0; i< jsonObject.Files.length; i++) {
 
-                var currentYear = new Date().getFullYear();
-                var yearFile = jsonObject.Files[i].DataPrinted.substring(6,10)
-                if(currentYear.toString() === yearFile)
-                {   
-                    var file = jsonObject.Files[i];
-                    var extensionExists = 0;
-                    for (var j=0 ; j < tempJson.length ; j++)
-                    {
-                        if (tempJson[j].extension === file.Extension) {
-                            extensionExists = 1;
-                            tempJson[j].totalPages = tempJson[j].totalPages + file.TotalPagesPrinted;
-                            break;
-                        }
-                    }
-                    if(!extensionExists)
-                    {
-                        tempJson.push({
-                                extension:file.Extension,
-                                totalPages:file.TotalPagesPrinted
-                        });
-                    }
-                }
-            }
-           tempJson.sort(function(a, b) {
-                return parseFloat(b.totalPages) - parseFloat(a.totalPages);
-            });
-            return tempJson;
-	}	
-        //source: http://www.cs.toronto.edu/~lungj/blog/?p=6
-	function getMonthlyCO2(jsonObject) {
-            var tempJson = new Array(12);
-            for (i = 0; i < tempJson.length ; i++) {
-                tempJson[i] = 0;
-            }
-            for(i = 0; i< jsonObject.Files.length; i++) {
-
-                var currentYear = new Date().getFullYear();
-                var yearFile = jsonObject.Files[i].DataPrinted.substring(6,10);
-                
-                if(currentYear.toString() === yearFile)
-                {   
-                    var monthFile = parseInt(jsonObject.Files[i].DataPrinted.substring(4,6));
-                    tempJson[monthFile-1] = tempJson[monthFile-1] + jsonObject.Files[i].TotalPagesPrinted*6;
-                }
-            }
-            return tempJson;
-	}
-       
-	function getTotalPapersPrinted(jsonObject) {
-            var totalPapers = 0;
-            for(i = 0; i< jsonObject.Files.length; i++) {
-
-                var currentYear = new Date().getFullYear();
-                var yearFile = jsonObject.Files[i].DataPrinted.substring(6,10);
-                
-                if(currentYear.toString() === yearFile)
-                {   
-                    totalPapers = totalPapers + jsonObject.Files[i].TotalPagesPrinted;
-                }
-            }
-            return totalPapers;
-	}
-	
-	var text = '{ "users" : [' +
-		'{ "email":"john@gmail.com" , "password":"123123" , "Files" : ['+
-			'{"TotalPagesPrinted":5 , "Colored":"True", "Extension":".doc" , "DataPrinted":"01/01/2016" , "co2":"12"},'+
-			'{"TotalPagesPrinted":5 , "Colored":"True" , "Extension":".txt" , "DataPrinted":"01/02/2016" , "co2":"15"},'+
-			'{"TotalPagesPrinted":35 , "Colored":"True" , "Extension":".png" , "DataPrinted":"01/02/2016" , "co2":"15"},'+
-			'{"TotalPagesPrinted":50 , "Colored":"True" , "Extension":".pdf" , "DataPrinted":"01/03/2016" , "co2":"15"},'+
-			'{"TotalPagesPrinted":200 , "Colored":"False" , "Extension":".pdf" , "DataPrinted":"01/03/2016" , "co2":"15"},'+
-			'{"TotalPagesPrinted":5 , "Colored":"True" , "Extension":".pdf" , "DataPrinted":"01/04/2016" , "co2":"15"},'+
-                        '{"TotalPagesPrinted":1 , "Colored":"True" , "Extension":".jpg" , "DataPrinted":"01/04/2016" , "co2":"15"},'+
-                        '{"TotalPagesPrinted":1 , "Colored":"True" , "Extension":".bpm" , "DataPrinted":"01/04/2016" , "co2":"15"},'+
-			'{"TotalPagesPrinted":5 , "Colored":"True" , "Extension":".doc" , "DataPrinted":"01/04/2016" , "co2":"15"}'+
-		']}]}';
-	var obj = JSON.parse(text);
-
-	var barChartData = {
-		labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
-		datasets : [
-                    {
-                            fillColor : "rgba(220,220,220,0.5)",
-                            strokeColor : "rgba(220,220,220,0.8)",
-                            highlightFill: "rgba(220,220,220,0.75)",
-                            highlightStroke: "rgba(220,220,220,1)",
-                            data : new Array(12)
-                    }
-		]
-
-	}
-
-	var pieData = [
-		{
-			value: 0,
-			color:"#F7464A",
-			highlight: "#FF5A5E",
-			label: "Red"
-		},
-		{
-			value: 0,
-			color: "#46BFBD",
-			highlight: "#5AD3D1",
-			label: "Green"
-		},
-		{
-			value: 0,
-			color: "#FDB45C",
-			highlight: "#FFC870",
-			label: "Yellow"
-		},
-		{
-			value: 0,
-			color: "#949FB1",
-			highlight: "#A8B3C5",
-			label: "Grey"
-		},
-		{
-			value: 0,
-			color: "#4D5360",
-			highlight: "#616774",
-			label: "Dark Grey"
-		}
-
-	];
-        var pieResult = getMostUsedExtensionFiles(obj.users[0]);
-        for(var i = 0 ; i < pieResult.length && i < 5 ; i++)
-        {
-            pieData[i].label = pieResult[i].extension;
-            pieData[i].value = pieResult[i].totalPages;
-        }
-        
-        var monthlyCO2 = getMonthlyCO2(obj.users[0]);
-        barChartData.datasets[0].data = monthlyCO2;
-
-        var totalPapers = getTotalPapersPrinted(obj.users[0]);
-        document.getElementById("totalPages").innerHTML = "Total pages printed: " + totalPapers;
-        document.getElementById("totalCO2").innerHTML = "Total gramms of CO2 emmited: " + totalPapers*6;
-        document.getElementById("totalTrees").innerHTML = "Ammount of trees killed: " + totalPapers/8000;
-	window.onload = function(){
-            var ctx = document.getElementById("bargraph").getContext("2d");
-            window.myBar = new Chart(ctx).Bar(barChartData, {
-                    responsive : true
-            });
-
-            var ctx2 = document.getElementById("piechart").getContext("2d");
-            window.myPie = new Chart(ctx2).Doughnut(pieData);
-	}
-	
-
-	</script>
-	</body>
+    </body>
 </html>
