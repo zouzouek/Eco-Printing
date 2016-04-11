@@ -17,11 +17,16 @@ body{
     margin:auto;
 }
 .logoMiddle{
-    background-image: url("img/eco-printing-logo.jpg");
-    width:500px;
-    height:500px;
+    width:50%;
+    height:50%;
     margin:auto;
 
+}
+.logoMiddle img{
+    display:block;
+    width:inherit;
+    height: inherit;
+    margin: auto;    
 }
 .Button{
     display:block;
@@ -71,7 +76,7 @@ button:focus {outline:0 !important; }
 }
 .logo{
     height:100%;
-/*    width:30%;*/
+    /*    width:30%;*/
     float:left;
     margin-left: 20%;
 }
