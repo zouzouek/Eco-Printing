@@ -29,6 +29,7 @@ body{
     margin: auto;    
 }
 .Button{
+    padding:0px;
     display:block;
     font-size: 50pt;
     height:100px;
@@ -39,8 +40,16 @@ body{
     border:3px #84b21b solid;
     margin:auto;
     margin-top:10%;
-    outline:nonw;
+    outline:none;
     cursor:pointer;
+}
+.Button img{
+    padding:0px;
+    height:inherit;
+    width:inherit;
+}
+.imageButton{
+    border:0px;
 }
 button:focus {outline:0 !important; }
 
@@ -67,7 +76,8 @@ button:focus {outline:0 !important; }
     margin-left: 3%
 }
 .pie{
-    margin-left: 3%
+    margin-left: 3%;
+    margin-buttom:3%
 }
 .topbar{
     display:block;
@@ -123,4 +133,51 @@ button:focus {outline:0 !important; }
 }
 .margin{
     margin-top:2%
+}
+
+#PrintButton { 
+    font-size: 25pt;
+}
+.formElements{
+    text-align: center
+}
+.loader{
+    display:block;
+    font-size: 50pt;
+    height:100px;
+    width:100px;
+    background-color: #f9f7e8;
+    color: #84b21b;
+    border-radius: 50%;
+    border:3px #84b21b solid;
+    margin:auto;
+    margin-top:10%;
+    outline:none;
+}
+.unLoading{
+    display:none;
+}
+.success,  .error {
+    border: 1px solid;
+    margin: 10px 0px;
+    margin-top: 2%;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.error {
+    color: white;
+    background-color: #F16973;
+}
+.success{
+    background-color:#A1CD3B;
+    color:white;
+}
+#logout{
+    margin-right: 20%;
+    color:#84b21b;
+    font-size: 15pt;;
+    margin-top: 4%;
+    font-style: italic;
+    cursor:pointer;
 }
