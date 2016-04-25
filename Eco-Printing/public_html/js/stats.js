@@ -7,28 +7,30 @@
 
 function getMostUsedExtensionFiles(jsonObject) {
     var tempJson = [];
-    console.log(jsonObject);
-    for (i = 0; i < jsonObject.Files.length; i++) {
-        var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10)
-        if (currentYear.toString() === yearFile)
-        {
-            var file = jsonObject.Files[i];
-            var extensionExists = 0;
-            for (var j = 0; j < tempJson.length; j++)
+
+    for (var key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            var currentYear = new Date().getFullYear();
+            var yearFile = jsonObject[key].DataPrinted.substring(6, 10)
+            if (currentYear.toString() === yearFile)
             {
-                if (tempJson[j].extension === file.Extension) {
-                    extensionExists = 1;
-                    tempJson[j].totalPages = tempJson[j].totalPages + file.TotalPagesPrinted;
-                    break;
+                var file = jsonObject[key];
+                var extensionExists = 0;
+                for (var j = 0; j < tempJson.length; j++)
+                {
+                    if (tempJson[j].extension === file.Extension) {
+                        extensionExists = 1;
+                        tempJson[j].totalPages = tempJson[j].totalPages + file.TotalPagesPrinted;
+                        break;
+                    }
                 }
-            }
-            if (!extensionExists)
-            {
-                tempJson.push({
-                    extension: file.Extension,
-                    totalPages: file.TotalPagesPrinted
-                });
+                if (!extensionExists)
+                {
+                    tempJson.push({
+                        extension: file.Extension,
+                        totalPages: file.TotalPagesPrinted
+                    });
+                }
             }
         }
     }
@@ -43,47 +45,66 @@ function getMonthlyCO2(jsonObject) {
     for (i = 0; i < tempJson.length; i++) {
         tempJson[i] = 0;
     }
-    for (i = 0; i < jsonObject.Files.length; i++) {
-        var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10);
+    for (var key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            
+            var currentYear = new Date().getFullYear();
+            var yearFile = jsonObject[key].DataPrinted.substring(6, 10);
 
-        if (currentYear.toString() === yearFile)
-        {
-            var monthFile = parseInt(jsonObject.Files[i].DataPrinted.substring(4, 6));
-            tempJson[monthFile - 1] = tempJson[monthFile - 1] + jsonObject.Files[i].TotalPagesPrinted * 6;
+            if (currentYear.toString() === yearFile)
+            {
+                var monthFile = parseInt(jsonObject[key].DataPrinted.substring(4, 6));
+                tempJson[monthFile - 1] = tempJson[monthFile - 1] + jsonObject[key].TotalPagesPrinted * 6;
+            }
         }
     }
     return tempJson;
+
 }
 
 function getTotalPapersPrinted(jsonObject) {
     var totalPapers = 0;
-    for (i = 0; i < jsonObject.Files.length; i++) {
-        var currentYear = new Date().getFullYear();
-        var yearFile = jsonObject.Files[i].DataPrinted.substring(6, 10);
+     for (var key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            var currentYear = new Date().getFullYear();
+            var yearFile = jsonObject[key].DataPrinted.substring(6, 10);
 
-        if (currentYear.toString() === yearFile)
-        {
-            totalPapers = totalPapers + jsonObject.Files[i].TotalPagesPrinted;
+            if (currentYear.toString() === yearFile)
+            {
+                totalPapers = totalPapers + jsonObject[key].TotalPagesPrinted;
+            }
+        }
+    }
+    return totalPapers;
+}
+function getTotalColoredPapersPrinted(jsonObject) {
+    var totalPapers = 0;
+     for (var key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            var currentYear = new Date().getFullYear();
+            var yearFile = jsonObject[key].DataPrinted.substring(6, 10);
+
+            if (currentYear.toString() === yearFile)
+            {
+                if(jsonObject[key].Colored ==='true') {
+                    totalPapers = totalPapers + jsonObject[key].TotalPagesPrinted;
+                }
+            }
         }
     }
     return totalPapers;
 }
 
-ref.once("value", function (snapshot) {
-    drawStats(snapshot.val());
-}, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-});
+
 
 var barChartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     datasets: [
         {
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
             data: new Array(12)
         }
     ]
@@ -93,20 +114,20 @@ var barChartData = {
 var pieData = [
     {
         value: 0,
-        color: "#F7464A",
-        highlight: "#FF5A5E",
+        highlight: "#B81C27",
+        color: "#D53D48",
         label: "Red"
     },
     {
         value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
+        color: "#6CBAB2",
+        highlight: "#13746A",
         label: "Green"
     },
     {
         value: 0,
-        color: "#FDB45C",
-        highlight: "#FFC870",
+        color: "#F6A467",
+        highlight: "#DB813F",
         label: "Yellow"
     },
     {
@@ -123,32 +144,52 @@ var pieData = [
     }
 
 ];
+
+var pieDataColoredBlackWhite = [
+    {
+        value: 0,
+        highlight: "#B81C27",
+        color: "#D53D48",
+        label: "Colored"
+    },
+    {
+        value: 0,
+        color: "#6CBAB2",
+        highlight: "#13746A",
+        label: "Black and White"
+    }
+];
 function drawStats(data) {
-
-
-    var pieResult = getMostUsedExtensionFiles(data);
+    
+    var pieResult = getMostUsedExtensionFiles(data.Files);
     for (var i = 0; i < pieResult.length && i < 5; i++)
     {
         pieData[i].label = pieResult[i].extension;
         pieData[i].value = pieResult[i].totalPages;
     }
+    
 
-    var monthlyCO2 = getMonthlyCO2(data);
+    var monthlyCO2 = getMonthlyCO2(data.Files);
     barChartData.datasets[0].data = monthlyCO2;
 
-    var totalPapers = getTotalPapersPrinted(data);
-    document.getElementById("totalPages").innerHTML = "Total pages printed: " + totalPapers;
-    document.getElementById("totalCO2").innerHTML = "Total gramms of CO2 emmited: " + totalPapers * 6;
-    document.getElementById("totalTrees").innerHTML = "Ammount of trees killed: " + totalPapers / 8000;
-    window.onload = function () {
-        var ctx = document.getElementById("bargraph").getContext("2d");
-        window.myBar = new Chart(ctx).Bar(barChartData, {
-            responsive: true
-        });
-
-        var ctx2 = document.getElementById("piechart").getContext("2d");
-        window.myPie = new Chart(ctx2).Doughnut(pieData);
-    }
+    var totalPapers = getTotalPapersPrinted(data.Files);
+    document.getElementById("totalPages").innerHTML =  totalPapers;
+    document.getElementById("totalCO2").innerHTML =  totalPapers * 6;
+    document.getElementById("totalTrees").innerHTML = totalPapers / 8000;
+    var ctx2 = document.getElementById("piechart").getContext("2d");
+    window.myPie = new Chart(ctx2).Doughnut(pieData);
+    
+    var ctx = document.getElementById("bargraph").getContext("2d");
+    window.myBar = new Chart(ctx).Bar(barChartData, {
+        responsive: true
+    });
+   
+    var totalPrintedPapers = getTotalColoredPapersPrinted(data.Files);
+    var totalBlackWhitePapers = totalPapers - totalPrintedPapers;
+    pieDataColoredBlackWhite[0].value = totalPrintedPapers;
+    pieDataColoredBlackWhite[1].value = totalBlackWhitePapers;
+    var ctx3 = document.getElementById("piechartColoredBlackWhite").getContext("2d");
+    window.myPie2 = new Chart(ctx3).Doughnut(pieDataColoredBlackWhite);
 
 }
 ;
