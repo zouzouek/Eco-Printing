@@ -1,0 +1,183 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 9, 2016, 5:22:39 PM
+    Author     : joseph
+*/
+
+body{
+    background-color: #f9f7e8;
+}
+.container{
+    height:100%;
+    width:100%;
+    margin:auto;
+}
+.logoMiddle{
+    width:50%;
+    height:50%;
+    margin:auto;
+
+}
+.logoMiddle img{
+    display:block;
+    width:inherit;
+    height: inherit;
+    margin: auto;    
+}
+.Button{
+    padding:0px;
+    display:block;
+    font-size: 50pt;
+    height:100px;
+    width:100px;
+    background-color: #f9f7e8;
+    color: #84b21b;
+    border-radius: 50%;
+    border:3px #84b21b solid;
+    margin:auto;
+    margin-top:10%;
+    outline:none;
+    cursor:pointer;
+}
+.Button img{
+    padding:0px;
+    height:inherit;
+    width:inherit;
+}
+.imageButton{
+    border:0px;
+}
+button:focus {outline:0 !important; }
+
+.Button:hover{
+    background-color:  #84b21b;
+    color: #f9f7e8;
+}
+.graphContainer{
+    text-align: center;
+    width:50%;
+    color: #84b21b;
+}
+.left{
+    float:left
+}
+.right{
+    float:right
+}
+.center{
+    margin:auto
+}
+
+.graph{
+    margin-left: 3%
+}
+.pie{
+    margin-left: 3%;
+    margin-buttom:3%
+}
+.topbar{
+    display:block;
+    height:200px;
+    width: 100%;
+}
+.logo{
+    height:100%;
+    /*    width:30%;*/
+    float:left;
+    margin-left: 20%;
+}
+.logo img{
+    width: inherit;
+    height:inherit;
+}
+.name{
+    margin-right: 20%;
+    color:#84b21b;
+    font-size: 18pt;
+    margin-top: 2%;
+}
+.content{
+    border-top: 3px #84b21b solid;
+    width:60%;
+    margin:auto;
+    margin-top:1%;
+}
+.boxTitle{
+    color:#84b21b;
+    font-size:24pt;
+    text-align: center;
+}
+.statsitem{
+    width: 30%;
+    height: 100px;
+    background-color: #84b21b;
+    color:#f9f7e8;
+    border-radius: 20px;
+
+}
+.statsBox{
+    height:100px;
+}
+.title{
+    text-align: center;
+    font-size: x-large;
+    height: 50%;
+    margin:auto;
+    margin-top:2%;
+    word-wrap: break-word;
+
+}
+.margin{
+    margin-top:2%
+}
+
+#PrintButton { 
+    font-size: 25pt;
+}
+.formElements{
+    text-align: center
+}
+.loader{
+    display:block;
+    font-size: 50pt;
+    height:100px;
+    width:100px;
+    background-color: #f9f7e8;
+    color: #84b21b;
+    border-radius: 50%;
+    border:3px #84b21b solid;
+    margin:auto;
+    margin-top:10%;
+    outline:none;
+}
+.unLoading{
+    display:none;
+}
+.success,  .error {
+    border: 1px solid;
+    margin: 10px 0px;
+    margin-top: 2%;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.error {
+    color: white;
+    background-color: #F16973;
+}
+.success{
+    background-color:#A1CD3B;
+    color:white;
+}
+#logout{
+    margin-right: 20%;
+    color:#84b21b;
+    font-size: 15pt;;
+    margin-top: 4%;
+    font-style: italic;
+    cursor:pointer;
+}
